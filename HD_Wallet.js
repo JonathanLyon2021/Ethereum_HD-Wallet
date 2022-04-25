@@ -23,12 +23,22 @@
 
 //#3 New Random HD Wallet // Generates random mnemonics
 
+// const ethers = require('ethers');
+
+// function generateRandomHDWallet() {
+//     return ethers.Wallet.createRandom()
+// }
+
+// const wallet = generateRandomHDWallet();
+// console.log(generateRandomHDWallet());
+// console.log(`Mnemonic: ${wallet.mnemonic.phrase}`);
+
+//#4 Save HD Wallet as JSON//
 const ethers = require('ethers');
 
-function generateRandomHDWallet() {
-    return ethers.Wallet.createRandom()
+async function createAndSaveWalletAsJSON(password) {
+    const wallet = await ethers.Wallet.createRandom().encrypt(password)
+    console.log(JSON.parse(wallet));
 }
 
-const wallet = generateRandomHDWallet();
-console.log(generateRandomHDWallet());
-console.log(`Mnemonic: ${wallet.mnemonic.phrase}`);
+createAndSaveWalletAsJSON('Kingsland University');
