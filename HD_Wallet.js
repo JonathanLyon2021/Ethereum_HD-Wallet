@@ -34,11 +34,39 @@
 // console.log(`Mnemonic: ${wallet.mnemonic.phrase}`);
 
 //#4 Save HD Wallet as JSON//
+// const ethers = require('ethers');
+
+// async function createAndSaveWalletAsJSON(password) {
+//     const wallet = await ethers.Wallet.createRandom().encrypt(password)
+//     console.log(JSON.parse(wallet));
+// }
+
+// createAndSaveWalletAsJSON('Kingsland University');
+
+//#5 Load HD Wallet from JSON -
+// Decrypt and load an HD node from a JSON wallet using a password//
+
 const ethers = require('ethers');
 
-async function createAndSaveWalletAsJSON(password) {
-    const wallet = await ethers.Wallet.createRandom().encrypt(password)
-    console.log(JSON.parse(wallet));
+async function decryptWallet(json, password) {
+    return ethers.Wallet.fromEncryptedJson(json, password)
 }
 
-createAndSaveWalletAsJSON('Kingsland University');
+async function createAndSaveWalletAsJSON(password) {
+    const wallet = await ethers.Wallet.createRandom()
+    console.log('Wallet before encryption ===')
+    console.log(wallet)
+    return wallet.encrypt(password)
+}
+
+;(async () => {
+    const password = 'Kingsland University';
+    //Encryption
+    let json = await createAndSaveWalletAsJSON(password)
+
+    //Decryption
+    let walletDecrypted = await decryptWallet(json, password)
+    console.log('Wallet after decryption ===')
+    console.log(walletDecrypted)
+})()
+
